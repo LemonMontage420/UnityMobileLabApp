@@ -5,17 +5,18 @@ using UnityEngine;
 
 public class Spring : MonoBehaviour
 {
+    public bool onScale;
     public Transform weight;
     private Mesh springMesh;
     private Material springMat;
+    private MeshRenderer springRenderer;
     private float springLength;
     public float restLength;
     private float forceActingOnSpring;
     private float springForce;
     public float springStiffness;
     private float gravity = -9.81f;
-    [Range(0.0f, 10.0f)]
-    public float weightMass;
+    private float weightMass;
     private float springMass = 1.0f;
     private float springVel;
     private float springDamper;
@@ -26,25 +27,63 @@ public class Spring : MonoBehaviour
         //Make Sure The Spring Is Always Rendered As It Sometimes Disappears When Scaling In The Vertex Shader (Vertices Become Out Of The Mesh Bounds)
         springMesh = GetComponent<MeshFilter>().mesh;
         springMesh.bounds = new Bounds(Vector3.zero, new Vector3(100.0f, 100.0f, 100.0f));
-
-        springMat = GetComponent<MeshRenderer>().material;
+        springRenderer = GetComponent<MeshRenderer>();
+        springMat = springRenderer.material;
 
         springLength = restLength;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        if(onScale)
+        {
+            SpringOnScale();
+        }
+        else
+        {
+            SpringOffScale();
+        }
+
+        springMat.SetFloat("_SpringLength", springLength);
+    }
+
+    void SpringOnScale()
+    {
+        if(!springRenderer.enabled)
+        {
+            springRenderer.enabled = true;
+        }
+
+        if(weight != null)
+        {
+            weightMass = weight.GetComponent<Rigidbody>().mass;
+        }
+        else
+        {
+            weightMass = 0.0f;
+        }
+
         forceActingOnSpring = gravity * weightMass;
         springForce = ((restLength - springLength) * springStiffness) - springDamper;
         float netForce = springForce - forceActingOnSpring;
         float springAccel = netForce / springMass;
-        springVel += springAccel * Time.deltaTime;
-        springLength += springVel * Time.deltaTime;
+        springVel += springAccel * Time.fixedDeltaTime;
+        springLength += springVel * Time.fixedDeltaTime;
         springDamper = springVel * damperStiffness;
 
-        springMat.SetFloat("_SpringLength", springLength);
+        if(weight != null)
+        {
+            weight.position = transform.position + (-transform.up * (springLength - 0.02f));
+        }
+    }
 
-        weight.position = transform.position + (-transform.up * (springLength - 0.02f));
+    void SpringOffScale()
+    {
+        if(springRenderer.enabled)
+        {
+            springRenderer.enabled = false;
+        }
+        springLength = restLength;
     }
 }

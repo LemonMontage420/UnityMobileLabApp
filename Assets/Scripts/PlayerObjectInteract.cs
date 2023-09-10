@@ -8,7 +8,7 @@ public class PlayerObjectInteract : MonoBehaviour
     private InteractableObject currentObject;
     private RaycastHit hit;
     private float rayLength = 2.0f;
-    private GameObject currentInventory;
+    [HideInInspector] public GameObject currentInventory;
 
     // Update is called once per frame
     void Update()
