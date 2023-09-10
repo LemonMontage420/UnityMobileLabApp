@@ -13,27 +13,31 @@ public class InteractableObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(canInteract)
+        if(Input.GetKeyDown(KeyCode.E))
         {
-            if(Input.GetKeyDown(KeyCode.E))
-            {
-                isPickedUp = !isPickedUp;
-            }
-
             if(isPickedUp)
             {
-                PickupObject();
+                isPickedUp = false;
             }
-            else
+            if(!isPickedUp && canInteract)
             {
-                DropObject();
+                isPickedUp = true;
             }
+        }
+        
+        if(isPickedUp)
+        {
+            PickupObject();
+        }
+        else
+        {
+            DropObject();
         }
     }
 
