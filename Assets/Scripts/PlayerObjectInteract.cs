@@ -20,6 +20,7 @@ public class PlayerObjectInteract : MonoBehaviour
             {
                 currentObject.canInteract = false;
             }
+            
             currentObject = hit.transform.gameObject.GetComponent<InteractableObject>();
             if(currentInventory == null)
             {
@@ -35,6 +36,7 @@ public class PlayerObjectInteract : MonoBehaviour
             }
         }
 
+        //Get What's Currently Being Held
         if(interactTarget.childCount != 0)
         {
             currentInventory = interactTarget.GetChild(0).gameObject;

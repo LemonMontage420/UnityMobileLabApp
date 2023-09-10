@@ -18,6 +18,7 @@ public class PlayerDoorInteract : MonoBehaviour
             {
                 currentDoor.canInteract = false;
             }
+            
             currentDoor = hit.transform.gameObject.GetComponent<Doors>();
             currentDoor.canInteract = true;
         }
