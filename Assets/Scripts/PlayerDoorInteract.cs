@@ -1,3 +1,6 @@
+//TODO:
+//Make This Script More Robust (Have Raycast Function Similar To PlayerObjectInteract.cs)
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,3 +1,6 @@
+//TODO:
+//Make This Script Practically Be An Addendum To The InteractableParent.cs Script (Simply Reads What's Attached To The Spring Via The Spring's Interactable Parent Target To Get Info About The Object That's Attached)
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

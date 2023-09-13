@@ -4,46 +4,76 @@ using UnityEngine;
 
 public class PlayerObjectInteract : MonoBehaviour
 {
-    public Transform interactTarget;
-    private InteractableObject currentObject;
-    private RaycastHit hit;
+    public InteractableParent playerParent;
+    private InteractableParent otherParent;
+    private GameObject currentObject;
+    private RaycastHit interactableHit;
+    private RaycastHit otherParentHit;
     private float rayLength = 2.0f;
-    [HideInInspector] public GameObject currentInventory;
+    public LayerMask interactableLayer;
+    public LayerMask otherParentLayer;
 
     // Update is called once per frame
     void Update()
     {
-        if (Physics.Raycast(transform.position + (transform.forward * 0.4f), transform.forward, out hit, rayLength) && hit.transform.gameObject.GetComponent<InteractableObject>() != null)
+        if(Physics.Raycast(transform.position + (transform.forward * 0.4f), transform.forward, out otherParentHit, rayLength, otherParentLayer, QueryTriggerInteraction.Collide))
         {
-            //Fix To Make Sure The Previous Interactable Can't Open And Close Even When Not Looking At It
-            if(currentObject != null && currentObject != hit.transform.gameObject.GetComponent<InteractableObject>())
+            otherParent = otherParentHit.transform.GetComponent<InteractableParent>();
+
+            if(Input.GetKeyDown(KeyCode.E))
             {
-                currentObject.canInteract = false;
-            }
-            
-            currentObject = hit.transform.gameObject.GetComponent<InteractableObject>();
-            if(currentInventory == null)
-            {
-                currentObject.canInteract = true;
+                if(playerParent.currentInventory != null && otherParent.currentInventory == null)
+                {
+                    GameObject objectToTransfer = playerParent.currentInventory;
+                    playerParent.UnParent(objectToTransfer);
+                    otherParent.Parent(objectToTransfer);
+                }
             }
         }
         else
         {
-            if(currentObject != null)
+            if(otherParent != null)
             {
-                currentObject.canInteract = false;
-                currentObject = null;
+                otherParent = null;
             }
         }
 
-        //Get What's Currently Being Held
-        if(interactTarget.childCount != 0)
+        if (Physics.Raycast(transform.position + (transform.forward * 0.4f), transform.forward, out interactableHit, rayLength, interactableLayer, QueryTriggerInteraction.Ignore))
         {
-            currentInventory = interactTarget.GetChild(0).gameObject;
+            currentObject = interactableHit.transform.gameObject;
+            if(playerParent.currentInventory == null && Input.GetKeyDown(KeyCode.E))
+            {
+                if(currentObject.transform.parent != null && currentObject.transform.parent.GetComponent<InteractableParent>() != null)
+                {
+                    otherParent = currentObject.transform.parent.GetComponent<InteractableParent>();
+                    if(otherParent.currentInventory != currentObject)
+                    {
+                        playerParent.Parent(currentObject);
+                    }
+                    else
+                    {
+                        GameObject objectToTransfer = otherParent.currentInventory;
+                        otherParent.UnParent(objectToTransfer);
+                        playerParent.Parent(objectToTransfer);
+                    }
+                }
+                else
+                {
+                    playerParent.Parent(currentObject);
+                }
+            }
         }
         else
         {
-            currentInventory = null;
+            if(playerParent.currentInventory != null && Input.GetKeyDown(KeyCode.E))
+            {
+                playerParent.UnParent(playerParent.currentInventory);
+            }
+            if(currentObject != null)
+            {
+                currentObject = null;
+            }
         }
     }
 }
+
