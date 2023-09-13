@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class Spring : MonoBehaviour
 {
+    public InteractableParent attachmentPoint;
     public bool onScale;
     public Transform weight;
     private Mesh springMesh;
@@ -39,6 +40,15 @@ public class Spring : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(attachmentPoint.currentInventory != null)
+        {
+            weight = attachmentPoint.currentInventory.transform;
+        }
+        else
+        {
+            weight = null;
+        }
+
         if(onScale)
         {
             SpringOnScale();
@@ -48,6 +58,7 @@ public class Spring : MonoBehaviour
             SpringOffScale();
         }
 
+        attachmentPoint.transform.localPosition = new Vector3(0.0f, -springLength, 0.0f);
         springMat.SetFloat("_SpringLength", springLength);
     }
 
@@ -74,11 +85,6 @@ public class Spring : MonoBehaviour
         springVel += springAccel * Time.fixedDeltaTime;
         springLength += springVel * Time.fixedDeltaTime;
         springDamper = springVel * damperStiffness;
-
-        if(weight != null)
-        {
-            weight.position = transform.position + (-transform.up * (springLength - 0.02f));
-        }
     }
 
     void SpringOffScale()

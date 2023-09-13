@@ -8,8 +8,10 @@ using UnityEngine;
 public class InteractableParent : MonoBehaviour
 {
     public GameObject currentInventory;
+    public GameObject[] legalInteractions;
     public Vector3 objectTargetPosition;
     public Vector3 objectTargetRotation;
+    private bool isLegal;
 
     // Start is called before the first frame update
     void Start()
@@ -19,22 +21,42 @@ public class InteractableParent : MonoBehaviour
 
     public void Parent(GameObject objectToParent)
     {
-        Rigidbody rb = objectToParent.GetComponent<Rigidbody>();
+        isLegal = false;
+        for (int i = 0; i < legalInteractions.Length; i++)
+        {
+            if(objectToParent == legalInteractions[i])
+            {
+                isLegal = true;
+            }
+        }
+        if(isLegal)
+        {
+            Rigidbody rb = objectToParent.GetComponent<Rigidbody>();
         
-        rb.isKinematic = true;
-        objectToParent.transform.parent = transform;
-        objectToParent.transform.localPosition = objectTargetPosition;
-        objectToParent.transform.localRotation = Quaternion.Euler(objectTargetRotation);
+            rb.isKinematic = true;
+            objectToParent.transform.parent = transform;
+            objectToParent.transform.localPosition = objectTargetPosition;
+            objectToParent.transform.localRotation = Quaternion.Euler(objectTargetRotation);
 
-        currentInventory = objectToParent;
+            currentInventory = objectToParent;
+        }
     }
     public void UnParent(GameObject objectToUnParent)
     {
-        Rigidbody rb = objectToUnParent.GetComponent<Rigidbody>();
+        isLegal = false;
+        if(transform.parent == null | transform.parent.GetComponent<InteractableParent>() == null)
+        {
+            isLegal = true;
+        }
+        
+        if(isLegal)
+        {
+            Rigidbody rb = objectToUnParent.GetComponent<Rigidbody>();
 
-        rb.isKinematic = false;
-        objectToUnParent.transform.parent = null;
+            rb.isKinematic = false;
+            objectToUnParent.transform.parent = null;
 
-        currentInventory = null;
+            currentInventory = null;
+        }
     }
 }
