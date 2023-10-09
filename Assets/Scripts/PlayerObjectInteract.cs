@@ -18,8 +18,7 @@ public class PlayerObjectInteract : MonoBehaviour
     {
         if(Physics.Raycast(transform.position + (transform.forward * 0.4f), transform.forward, out otherParentHit, rayLength, otherParentLayer, QueryTriggerInteraction.Collide))
         {
-            otherParent = otherParentHit.transform.GetComponent<InteractableParent>();
-
+            otherParent = otherParentHit.collider.transform.GetComponent<InteractableParent>();
             if(Input.GetKeyDown(KeyCode.E))
             {
                 if(playerParent.currentInventory != null && otherParent.currentInventory == null)

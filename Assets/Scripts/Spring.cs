@@ -9,12 +9,10 @@ using UnityEngine;
 public class Spring : MonoBehaviour
 {
     public InteractableParent attachmentPoint;
-    public bool onScale;
     public Transform weight;
     private Mesh springMesh;
     private Material springMat;
-    private MeshRenderer springRenderer;
-    private float springLength;
+    public float springLength;
     public float restLength;
     private float forceActingOnSpring;
     private float springForce;
@@ -31,8 +29,7 @@ public class Spring : MonoBehaviour
         //Make Sure The Spring Is Always Rendered As It Sometimes Disappears When Scaling In The Vertex Shader (Vertices Become Out Of The Mesh Bounds)
         springMesh = GetComponent<MeshFilter>().mesh;
         springMesh.bounds = new Bounds(Vector3.zero, new Vector3(100.0f, 100.0f, 100.0f));
-        springRenderer = GetComponent<MeshRenderer>();
-        springMat = springRenderer.material;
+        springMat = GetComponent<MeshRenderer>().material;
 
         springLength = restLength;
     }
@@ -48,27 +45,6 @@ public class Spring : MonoBehaviour
         {
             weight = null;
         }
-
-        if(onScale)
-        {
-            SpringOnScale();
-        }
-        else
-        {
-            SpringOffScale();
-        }
-
-        attachmentPoint.transform.localPosition = new Vector3(0.0f, -springLength, 0.0f);
-        springMat.SetFloat("_SpringLength", springLength);
-    }
-
-    void SpringOnScale()
-    {
-        if(!springRenderer.enabled)
-        {
-            springRenderer.enabled = true;
-        }
-
         if(weight != null)
         {
             weightMass = weight.GetComponent<Rigidbody>().mass;
@@ -85,14 +61,8 @@ public class Spring : MonoBehaviour
         springVel += springAccel * Time.fixedDeltaTime;
         springLength += springVel * Time.fixedDeltaTime;
         springDamper = springVel * damperStiffness;
-    }
 
-    void SpringOffScale()
-    {
-        if(springRenderer.enabled)
-        {
-            springRenderer.enabled = false;
-        }
-        springLength = restLength;
+        attachmentPoint.transform.localPosition = new Vector3(0.0f, -springLength, 0.0f);
+        springMat.SetFloat("_SpringLength", springLength);
     }
 }
