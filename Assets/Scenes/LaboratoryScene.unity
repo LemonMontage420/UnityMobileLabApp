@@ -1154,7 +1154,7 @@ MonoBehaviour:
   canInteract: 0
   isOpen: 0
   hingeSpeed: 5
-  hingeRange: {x: -95, y: 0}
+  hingeRange: {x: 0, y: 275}
 --- !u!64 &887164899
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1216,7 +1216,7 @@ MonoBehaviour:
   canInteract: 0
   isOpen: 0
   hingeSpeed: 5
-  hingeRange: {x: -95, y: 0}
+  hingeRange: {x: 0, y: 275}
 --- !u!64 &887164903
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1394,7 +1394,7 @@ MonoBehaviour:
   canInteract: 0
   isOpen: 0
   hingeSpeed: 5
-  hingeRange: {x: 0, y: -85}
+  hingeRange: {x: 0, y: 275}
 --- !u!64 &887164915
 MeshCollider:
   m_ObjectHideFlags: 0
