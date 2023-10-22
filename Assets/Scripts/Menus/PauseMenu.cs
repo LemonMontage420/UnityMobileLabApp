@@ -9,39 +9,41 @@ public class PauseMenu : MonoBehaviour
     public GameObject crossHair;
     public bool isPaused;
 
-    private void LateUpdate() 
+    void Start() 
+    {
+        isPaused = false;    
+    }
+
+    void Update() 
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Resume();
+            isPaused = !isPaused;
         }
 
-        if(pauseMenu.activeInHierarchy)
+        if(isPaused)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             Time.timeScale = 0.0f;
+
+            crossHair.SetActive(false);
+            pauseMenu.SetActive(true);
         }
-        else
+        if(!isPaused)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             Time.timeScale = 1.0f;
+            
+            crossHair.SetActive(true);
+            pauseMenu.SetActive(false);
         }
     }
 
     public void Resume()
     {
-        if(pauseMenu.activeInHierarchy)
-        {
-            pauseMenu.SetActive(false);
-            crossHair.SetActive(true);
-        }
-        else
-        {
-            pauseMenu.SetActive(true);
-            crossHair.SetActive(false);
-        }
+        isPaused = false;
     }
 
     public void Quit()

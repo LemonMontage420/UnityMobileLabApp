@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class Spring : MonoBehaviour
 {
+    public Transform levelIndicator;
     public InteractableParent attachmentPoint;
     public Transform weight;
     private Mesh springMesh;
@@ -40,10 +41,12 @@ public class Spring : MonoBehaviour
         if(attachmentPoint.currentInventory != null)
         {
             weight = attachmentPoint.currentInventory.transform;
+            levelIndicator.gameObject.SetActive(true);
         }
         else
         {
             weight = null;
+            levelIndicator.gameObject.SetActive(false);
         }
         if(weight != null)
         {

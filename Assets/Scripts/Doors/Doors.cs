@@ -42,11 +42,11 @@ public class Doors : MonoBehaviour
 
         if(isOpen)
         {
-            transform.localRotation = Quaternion.Euler(Mathf.Lerp(transform.localEulerAngles.x, hingeRange.y * hingeAxisRotMultiplier.x, Time.deltaTime * hingeSpeed), Mathf.Lerp(transform.localEulerAngles.y, hingeRange.y * hingeAxisRotMultiplier.y, Time.deltaTime * hingeSpeed), Mathf.Lerp(transform.localEulerAngles.z, hingeRange.y * hingeAxisRotMultiplier.z, Time.deltaTime * hingeSpeed));
+            transform.localRotation = Quaternion.Lerp(Quaternion.Euler(transform.localEulerAngles), Quaternion.Euler(new Vector3(hingeRange.y * hingeAxisRotMultiplier.x, hingeRange.y * hingeAxisRotMultiplier.y, hingeRange.y * hingeAxisRotMultiplier.z)), Time.deltaTime * hingeSpeed);
         }
         else
         {
-             transform.localRotation = Quaternion.Euler(Mathf.Lerp(transform.localEulerAngles.x, hingeRange.x * hingeAxisRotMultiplier.x, Time.deltaTime * hingeSpeed), Mathf.Lerp(transform.localEulerAngles.y, hingeRange.x * hingeAxisRotMultiplier.y, Time.deltaTime * hingeSpeed), Mathf.Lerp(transform.localEulerAngles.z, hingeRange.x * hingeAxisRotMultiplier.z, Time.deltaTime * hingeSpeed));
+            transform.localRotation = Quaternion.Lerp(Quaternion.Euler(transform.localEulerAngles), Quaternion.Euler(new Vector3(hingeRange.x * hingeAxisRotMultiplier.x, hingeRange.x * hingeAxisRotMultiplier.y, hingeRange.x * hingeAxisRotMultiplier.z)), Time.deltaTime * hingeSpeed);
         }
     }
 }
