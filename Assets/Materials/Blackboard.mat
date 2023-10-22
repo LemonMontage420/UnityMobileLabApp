@@ -72,7 +72,7 @@ Material:
     - _Glossiness: 0.2
     - _GlossyReflections: 1
     - _HeightScale: 0.1
-    - _LineAngle: 27.135849
+    - _LineAngle: -8.783258
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -88,7 +88,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LineTint: {r: 1, g: 1, b: 1, a: 1}
-    - _PointCoords12: {r: 4.9, g: 2.5, b: 7.35, a: 7.116975}
-    - _PointCoords34: {r: 11, g: 7.1862497, b: 18.35, a: 10.65}
+    - _PointCoords12: {r: 4.9, g: 9.040375, b: 7.35, a: 6.880625}
+    - _PointCoords34: {r: 11, g: 7.7771244, b: 18.35, a: 6.269375}
     - _ScatterWavelength: {r: 0.65, g: 0.57, b: 0.475, a: 1}
   m_BuildTextureStacks: []
