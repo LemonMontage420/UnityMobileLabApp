@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 8017c6f9e5112a045a4678f9fef452f4
   - enabled: 1
-    path: Assets/Scenes/LaboratoryScene.unity
+    path: Assets/Scenes/SpringLab.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/CannonLab.unity
+    guid: faf84d33f5c3f7540bb73970e96cb469
   m_configObjects: {}

@@ -16,11 +16,11 @@ public class MainMenu : MonoBehaviour
 
     public void PlayLabSpring()
     {
-        SceneManager.LoadScene("LaboratoryScene");
+        SceneManager.LoadScene("SpringLab");
     }
     public void PlayLabWater()
     {
-        SceneManager.LoadScene("LaboratoryScene");
+        SceneManager.LoadScene("CannonLab");
     }
 
     public void Back()
